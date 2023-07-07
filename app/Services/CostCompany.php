@@ -8,11 +8,14 @@ class CostCompany
     private $companyData = [];
     private $travelData = [];
     private $subCompaniesCost = 0;
-    private $childrenCompaniesCost = 0;
 
+    /**
+     * Show list of nested companies and calcuate cost of travels
+     *
+     * @return array
+     */
     public function getList(): array
     {
-        // $start = microtime(true);
         $this->travelData = Travel::getData();
         $this->companyData = Company::getData();
         $data = [];
@@ -32,7 +35,6 @@ class CostCompany
             ];
         }
 
-        // dd('Total time: ' .  (microtime(true) - $start));
         return $data;
     }
 
@@ -49,7 +51,7 @@ class CostCompany
     }
 
     /**
-     * Make children companies
+     * Add children companies
      *
      * @param array $elements
      * @param integer $parentId
@@ -64,18 +66,15 @@ class CostCompany
 
             if ($element['parentId'] == $parentId) {
                 $costByCompany = CostCompany::calculateTravelCostByCompany($element['id']);
-
-                $this->childrenCompaniesCost = $costByCompany + $this->childrenCompaniesCost;
                 $this->subCompaniesCost = $this->subCompaniesCost + $costByCompany;
+                $element['cost'] = $costByCompany;
 
                 $children = $this->buildNestedArraysOfCompanies($elements, $element['id']);
                 if ($children) {
-                    $element['cost'] = $costByCompany + $this->childrenCompaniesCost;
+                    $element['cost'] = $element['cost'] + end($children)['cost'];
                     $element['children'] = $children;
                 } else {
-                    $element['cost'] = $costByCompany;
                     $element['children'] = [];
-                    $this->childrenCompaniesCost = $costByCompany;
                 }
 
                 $result[] = $element;
