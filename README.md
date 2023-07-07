@@ -1,8 +1,6 @@
 # travel company
 
----
-
-## This is an example of the API laravel project. Task is used from
+## This is an example of the API laravel project.
 
 The app will build a company tree with associated travel cost from two remote API endpoints.
 
@@ -11,7 +9,7 @@ The app will build a company tree with associated travel cost from two remote AP
 
 ---
 
-Open the page http://127.0.01:8000/api/list to see the list of companies
+Call this api endpoint http://127.0.01:8000/api/list, to see the list of companies
 
 ```
 http://127.0.01:8000/api/list
@@ -36,7 +34,7 @@ We should get next response (this is only example)
         "cost": 2223,
         "children": [...]
       }
-    ]
-  }
+    ], ...
+  }, ...
 ]
 ```
