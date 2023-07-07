@@ -68,13 +68,12 @@ class CostCompany
                 $costByCompany = CostCompany::calculateTravelCostByCompany($element['id']);
                 $this->subCompaniesCost = $this->subCompaniesCost + $costByCompany;
                 $element['cost'] = $costByCompany;
+                $element['children'] = [];
 
                 $children = $this->buildNestedArraysOfCompanies($elements, $element['id']);
                 if ($children) {
                     $element['cost'] = $element['cost'] + end($children)['cost'];
                     $element['children'] = $children;
-                } else {
-                    $element['children'] = [];
                 }
 
                 $result[] = $element;
